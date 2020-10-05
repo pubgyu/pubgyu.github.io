@@ -1,0 +1,140 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>three js</title>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="/assets/threejs/js/three/three.min.js"></script>
+	
+	<!-- 컨트롤 모듈 -->
+	<script src="/assets/threejs/js/three/OrbitControls.js"></script>
+	<!-- GLTF Load 모듈 -->
+	<script src="/assets/threejs/js/three/GLTFLoader.js"></script>
+	<!-- gui controls 모듈 -->
+	<script src="/assets/threejs/js/three/dat.gui.min.js"></script>
+	<!-- stats -->
+	<script src="/assets/threejs/js/three/stats.min.js"></script>
+	<!-- Keyboard -->
+	<script src="/assets/threejs/js/three/THREEx.KeyboardState.js"></script>
+
+
+	<!-- 아스키 이펙트 -->
+	<script src="/assets/threejs/js/three/effect/AsciiEffect.js"></script>
+	<!-- Composer 이펙트 -->
+	<script src="/assets/threejs/js/three/effect/EffectComposer.js"></script>
+	<script src="/assets/threejs/js/three/effect/RenderPass.js"></script>
+	<script src="/assets/threejs/js/three/effect/ShaderPass.js"></script>
+	<script src="/assets/threejs/js/three/effect/CopyShader.js"></script> <!-- pixel -->
+
+	<script src="/assets/threejs/js/three/effect/UnrealBloomPass.js"></script> <!-- bloom -->
+	<script src="/assets/threejs/js/three/effect/LuminosityHighPassShader.js"></script>
+
+
+	<!-- 물리엔진 -->
+	<script src="/assets/threejs/js/three/engine/physi.js"></script>
+	<script src="/assets/threejs/js/three/engine/simplex-noise.js"></script>
+
+	<script src="/assets/threejs/js/script.js"></script>
+</head>
+<style>
+html,body {margin:0;padding:0;}
+h1,h2,h3,h4,h5,h6{margin:0;}
+h1 {text-align:center;}
+canvas {display:block;width:100%;height:100%;margin:0 auto;}
+#wrap {position:relative;height:100%;}
+#wrap > .webgl-wrap {position:relative;display:inline-block;position:relative;width:100%;}
+#wrap > .webgl-wrap .map {position:absolute;top:0;right:0;z-index:10;}
+#wrap > .webgl-wrap .map:before {position:absolute;top:0;left:0;width:100%;height:100%;background-color:#000;border:1px solid skyblue;box-sizing:border-box;opacity:0.5;content:'';}
+#wrap > .webgl-wrap .map > .user {position:absolute;top:0;left:0
+	;background-color:red;border-radius:100%;z-index:2;}
+#wrap > .webgl-wrap .map > i {position:absolute;background-size:100% 100%;z-index:1;}
+#wrap > .webgl-wrap .map > i.tree {background-image:url('/assets/threejs/images/map/ico-tree.png');}
+#wrap > .webgl-wrap .map > i.rock {background-image:url('/assets/threejs/images/map/ico-rock.png');}
+#wrap > .webgl-wrap .light-wrap {position:absolute;top:0;left:0;z-index:10;}
+#wrap > .webgl-wrap .light-wrap .light-num {color:#fff;}
+#wrap > .webgl-wrap .light-wrap .light-num i {font-style:normal;}
+#wrap > .webgl-wrap .light-wrap .light-generate {display:block;font-size:14px;border:1px solid #000;background-color:#fff;}
+#wrap > .webgl-wrap .texture-wrap {position:absolute;top:50%;left:0;z-index:10;}
+#wrap > .webgl-wrap .texture-wrap button {display:block;}
+#wrap > .webgl-wrap .gui-wrap {position:absolute;top:0;right:0;}
+#wrap > .webgl-wrap .gui-wrap .dg.main {margin-bottom:15px;}
+#wrap > .webgl-wrap .gui-wrap .dg.main .close-button.close-bottom {position:static;}
+#wrap > .webgl-wrap .stats-wrap > div {position:absolute !important;top:auto !important;bottom:0 !important;}
+</style>
+<body>
+	<div id="wrap">
+		<div class="webgl-wrap test1">
+			<div class="light-wrap">
+				<button class="map-show">맵 표시</button>
+				<button class="light-add">조명추가</button>
+				<span class="light-num">조명 갯수 : <i>0</i></span>
+				<button class="light-generate">제너레이터 값 뽑기</button>
+			</div>
+
+			<!-- <div class="texture-wrap">
+				<button>대리석</button>
+				<button>들판</button>
+			</div> -->
+			<div class="gui-wrap"></div>
+			<div class="stats-wrap"></div>
+		</div>
+	</div>
+</body>
+<script>
+$(function () {
+	var $test1 = new threeMotion('.test1', {
+		src : '/assets/threejs/images/car/scene.gltf',
+		scale : 1,
+		bgColor : '#ffffff',
+		guideline : true,
+		treeNum : 20,
+		objX : 0,
+		objY : 0,
+		objZ : 0,
+		cameraX : 100,
+		cameraY : 50,
+		cameraZ : 8
+	});
+	$test1.init();
+
+	$('.map-show').on('click', function () {
+		$test1.mapShow();
+	});
+
+	$('.light-add').on('click', function () {
+		var $parent = $(this).parents('.webgl-wrap');
+		var _lightNum = Number($parent.find('.light-num i').text());
+		_lightNum++;
+		$parent.find('.light-num i').text(_lightNum);
+
+		if($parent.hasClass('test1')) $test1.lightAdd();
+	});
+	$('.light-generate').on('click', function () {
+		$test1.WEBGLGenerater();
+	});
+
+	var logoImage = new Image();
+	logoImage.src = '/assets/threejs/images/logo.svg';
+	logoImage.onload = function () {
+		var style = [
+			'padding: ' + this.height * .5 + 'px ' + this.width * .5 + 'px;',
+			'background: url('+ logoImage.src +');'
+	     ].join(' ');
+	     console.log('%c ',style);
+	};
+});
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,140 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Pinch Zoom</title>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="/assets/d3/js/d3.v4.js"></script>
+</head>
+<style>
+html,body {margin:0;padding:0;}
+h1,h2,h3,h4,h5,h6{margin:0;}
+h1 {text-align:center;}
+.people {position:absolute;top:50%;left:50%;width:30px;height:30px;border-radius:100%;background-color:red;z-index:10;pointer-events:none;overflow:hidden;
+transform:translate(-50%,-50%);}
+.people:before {position:absolute;top:50%;left:50%;width:100%;height:100%;border-radius:100%;box-sizing:border-box;border:1px solid #fff;background-color:rgba(255,255,255,0.5);content:'';
+animation:circleBlink forwards .8s ease-out infinite;
+transform:translate(-50%,-50%);}
+.circle-map {position:absolute;top:50%;left:50%;width:70vw;height:70vw;border:0 solid #000;
+transform:translate(-50%,-50%);}
+.circle-map .circle-g {transform-origin:center center;transform-box: fill-box;}
+
+@keyframes circleBlink {
+	0%{border-width:15px;}
+	100%{border-width:0px;}
+}
+</style>
+<body>
+	<div id="wrap">
+		<p>rader pinch</p>
+		<div class="people"></div>
+		<div class="circle-map"></div>
+	</div>
+</body>
+<script>
+$(function () {
+	if (navigator.geolocation) {
+		//위치 정보를 얻기
+		navigator.geolocation.getCurrentPosition (function(pos) {
+			$('#wrap').html(pos.coords.latitude);// 위도
+			$('#wrap').html(pos.coords.longitude); // 경도
+			console.log(pos.coords.latitude, pos.coords.longitude);
+		});
+	} else {
+		alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
+	}
+
+	let dataDot = [
+		[5, 20], 
+		[480, 90], 
+		[250, 50], 
+		[100, 33], 
+		[330, 95], 
+		[410, 12], 
+		[475, 44], 
+		[25, 67], 
+		[85, 21], 
+		[220, 88], 
+		[600,150]
+	];
+
+	let dataFile = [];
+	let _distance = 500;
+	let circleSvg;
+	let circleRader;
+	let circle;
+	let gX;
+	let gY;
+
+	for (var i = 0; i <= 10; i++) {
+		dataFile.push(i*_distance);
+	}
+
+	let circleMapW = $('.circle-map').width();
+	let circleMapH = $('.circle-map').height();
+	
+	let xLine = d3.scaleLinear().domain([-circleMapW/2, circleMapW/2]).range([0, circleMapW]);
+	let yLine = d3.scaleLinear().domain([-circleMapH/2, circleMapH/2]).range([circleMapH, 0]);
+
+	let xAxis = d3.axisBottom(xLine)
+				// .ticks((circleMapW + 2) / (circleMapH + 2) * 10)
+				.ticks(10)
+				.tickSize(circleMapH)
+				.tickPadding(8 - circleMapH);
+
+    let yAxis = d3.axisRight(yLine)
+				.ticks(10)
+				.tickSize(circleMapW)
+				.tickPadding(8 - circleMapW);
+
+	const zoomed = () => {
+		circleRader.attr('transform', 'scale('+d3.event.transform.k+')');
+		gX.call(xAxis.scale(d3.event.transform.rescaleX(xLine)));
+    	gY.call(yAxis.scale(d3.event.transform.rescaleY(yLine)));
+	}
+
+	let test = () => {
+		console.log('a');
+	}
+
+	circleSvg = d3.select('.circle-map').append('svg')
+				.attr('width', window.innerWidth * 0.7)
+				.attr('height', window.innerWidth * 0.7)
+				.call(
+					d3.zoom().on('zoom', zoomed)
+				);
+
+	gX = circleSvg.append('g')
+        .attr('class', '')
+        .call(xAxis);
+    gY = circleSvg.append('g')
+        .attr('class', '')
+        .call(yAxis);
+
+	circleRader = circleSvg.append('g').attr('class', 'circle-g');
+	dataFile.forEach(function (d,i){
+		circleRader.append('circle')
+		.attr('fill', 'transparent')
+		.attr('stroke', 'red')
+		.attr('stroke-width', (i*2))
+		.attr('cx', '50%')
+		.attr('cy', '50%')
+		.attr('r', d);
+	});
+});
+
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+

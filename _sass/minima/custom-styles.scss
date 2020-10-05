@@ -1,0 +1,67 @@
+/* pugyu custom style */
+body {
+	background-color:#fff;
+}
+
+/* header */
+.site-header {
+	position:sticky;
+	top:0;
+	border-top:0;
+	background-color:#fff;
+	.wrapper {
+		.site {
+			&-title-wrap {
+				display:block;
+				text-align:center;
+				.logo-img {
+					display:inline-block;
+					width:130px;
+					margin-right:20px;
+					border:2px solid #000;
+					border-radius:100%;
+					box-sizing:border-box;
+					vertical-align:middle;
+					overflow:hidden;
+					& > img {
+						display:block;
+						width:100%;
+					}
+				}
+			}
+			&-title {
+				display:inline-block;
+				float:none;
+				margin:0 auto;
+				font-size:30px;
+				color:#000;
+				letter-spacing:0;
+				vertical-align:middle;
+				&:hover {
+					text-decoration:none;
+				}
+			}
+			&-nav {
+				float:none;
+				text-align:center;
+			}
+		}
+	}
+}
+
+/* post list */
+.post-list {
+	li {
+		h3 {
+			a {
+				color:#000;
+				text-decoration:none;
+			}
+		}
+		.post-meta {
+			display:block;
+			margin-bottom:10px;
+			color:#000;
+		}
+	}
+}
