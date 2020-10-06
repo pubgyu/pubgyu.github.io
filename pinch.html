@@ -35,30 +35,41 @@ transform:translate(-50%,-50%);}
 </body>
 <script>
 $(function () {
-	if (navigator.geolocation) {
-		//위치 정보를 얻기
-		navigator.geolocation.getCurrentPosition (function(pos) {
-			$('#wrap').html(pos.coords.latitude);// 위도
-			$('#wrap').html(pos.coords.longitude); // 경도
-			console.log(pos.coords.latitude, pos.coords.longitude);
-		});
-	} else {
-		alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
+	let jsonUrl = '/assets/d3/js/info-data.json';
+
+	$.ajax({
+		url: jsonUrl,
+		dataType: 'json',
+		success: function(data){
+			$.each(data, function(index, item){
+				console.log(data);
+				// console.log(calcDistance(myLocation.lat, myLocation.lon, 37.618095, 127.075024));
+			});
+		}
+	});
+
+	let myLocation = {
+		"lat" : "37.610975",
+		"lon" : "127.077696"
 	}
 
-	let dataDot = [
-		[5, 20], 
-		[480, 90], 
-		[250, 50], 
-		[100, 33], 
-		[330, 95], 
-		[410, 12], 
-		[475, 44], 
-		[25, 67], 
-		[85, 21], 
-		[220, 88], 
-		[600,150]
-	];
+	// 위도경도 거리구하는 함수
+	function calcDistance(lat1, lon1, lat2, lon2) {
+		var theta = lon1 - lon2;
+		dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+		dist = Math.acos(dist);
+		dist = rad2deg(dist);
+		dist = dist * 60 * 1.1515;
+		dist = dist * 1.609344;
+		return Number(dist*1000).toFixed(2);
+	}
+	function deg2rad(deg) {
+		return (deg * Math.PI / 180);
+	}
+	function rad2deg(rad) {
+		return (rad * 180 / Math.PI);
+	}
+
 
 	let dataFile = [];
 	let _distance = 500;
