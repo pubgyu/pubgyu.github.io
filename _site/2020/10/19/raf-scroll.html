@@ -80,9 +80,9 @@ RAF 은 <strong>animation frame que</strong>에 stack이 쌓임<br />
 </code></pre></div></div>
 <p><br />
 3.ease 사용법</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//ease 값은 0~1 소수점으로 넣음</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//ease 값은 0 ~ 0.99 소수점으로 넣음</span>
 <span class="c1">//easing을 뺄땐 0 또는 생략가능</span>
-<span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">scroll</span><span class="dl">'</span><span class="p">,</span> <span class="nx">rafScroll</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="mi">0</span><span class="o">~</span><span class="mi">1</span><span class="p">));</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">scroll</span><span class="dl">'</span><span class="p">,</span> <span class="nx">rafScroll</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="mi">0</span> <span class="o">~</span> <span class="mf">0.99</span><span class="p">));</span>
 </code></pre></div></div>
 <p><br />
 4.ease scroll top</p>
@@ -96,7 +96,7 @@ RAF 은 <strong>animation frame que</strong>에 stack이 쌓임<br />
 </ul>
 
 <p><br />
-<a href="/html/00_canvas/raf-scroll.html">예시 보기</a></p>
+<a href="/html/00_canvas/raf-scroll.html" target="_blank">예시 보기</a></p>
 
   </div><a class="u-url" href="/2020/10/19/raf-scroll.html" hidden></a>
 </article>

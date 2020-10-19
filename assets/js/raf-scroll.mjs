@@ -8,6 +8,7 @@ export function rafScroll(cb, _ease) {
 		scrolled : true
 	}
 	let rafTimeout = null;
+	window.cancelAnimationFrame(esupdate);
 
 	function esupdate(){
 		let scrollY = $(window).scrollTop();

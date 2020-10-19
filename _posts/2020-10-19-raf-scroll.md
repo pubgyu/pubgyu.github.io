@@ -33,9 +33,9 @@ $(window).on('scroll', rafScroll(callback, ease));
 <br>
 3.ease 사용법
 ```javascript
-//ease 값은 0~1 소수점으로 넣음
+//ease 값은 0 ~ 0.99 소수점으로 넣음
 //easing을 뺄땐 0 또는 생략가능
-$(window).on('scroll', rafScroll(callback, 0~1));
+$(window).on('scroll', rafScroll(callback, 0 ~ 0.99));
 ```
 <br>
 4.ease scroll top
@@ -50,4 +50,4 @@ function callback (st) {
 
 
 <br>
-[예시 보기](/html/00_canvas/raf-scroll.html)
+[예시 보기](/html/00_canvas/raf-scroll.html){: target="_blank"}

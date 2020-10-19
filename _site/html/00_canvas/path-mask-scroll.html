@@ -27,7 +27,7 @@ html,body {position:relative;width:100%;height:100%;margin:0;padding:0;}
 <script type="module">
 import { rafScroll } from '/assets/js/raf-scroll.mjs';
 $(function () {
-	const _pathMAskScroll = function(el,option) {
+	const _pathMaskScroll = function(el,option) {
 		let canvas;
 		let ctx;
 		let path;
@@ -128,7 +128,7 @@ $(function () {
 		}
 	}
 
-	let pathMotion = new _pathMAskScroll($('.path-canvas'), {
+	let pathMotion = new _pathMaskScroll($('.path-canvas'), {
 		jsonSrc : '/html/00_canvas/line.json',
 		backImgSrc : '/assets/images/test.jpg',
 		lineW : 250
