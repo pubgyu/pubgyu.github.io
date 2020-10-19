@@ -1,0 +1,16 @@
+I"(<h2 id="원리">원리</h2>
+<hr />
+
+<p>기존 scroll event 만으로 동작하지 않고<br />
+<strong><u>requestAnimationFrame</u></strong> 속성을 사용하여 scroll event를 동작</p>
+
+<h2 id="퍼포먼스">퍼포먼스</h2>
+<hr />
+
+<p>기존 scroll은 <strong>task que</strong>에 stack이 쌓이는 쌓임</p>
+
+<p>RAF 은 <strong>animation frame que</strong>에 stack이 쌓임
+브라우져의 초당 렌더링 횟수(60fps) 을 맞추기 위해 스스로 조절함</p>
+
+<p><a href="/html/00_canvas/raf-scroll.html">DEMO 버전 보기</a></p>
+:ET

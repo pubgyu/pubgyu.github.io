@@ -1,0 +1,210 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>WebGL Car</title>
+
+	<script src="/assets/js/jquery-3.4.1.min.js"></script>
+	<script src="/assets/threejs/js/three/three.min.js"></script>
+	<!-- <script src="/assets/threejs/js/three/inflate.min.js"></script> -->
+	<!-- <script src="/assets/threejs/js/three/FBXLoader.js"></script> -->
+	<script src="/assets/threejs/js/three/GLTFLoader.js"></script>
+	<script src="/assets/threejs/js/three/OrbitControls.js"></script>
+	<script src="/assets/threejs/js/three/stats.min.js"></script>
+	<script type="module">
+		import { logoShow } from '/assets/js/console-logo.mjs';
+		logoShow();
+	</script>
+</head>
+<style>
+@keyframes circleMotion {
+	0%{stroke-dashoffset:0px;}
+	100%{stroke-dashoffset:-340px;}
+}
+
+html,body {position:relative;width:100%;height:100%;margin:0;padding:0;}
+#wrap {position:relative;width:100%;height:100%;}
+.webgl-canvas {position:relative;width:100%;height:100%;}
+.loading-bar {position:fixed;bottom:0;left:0;display:none;width:100%;height:100%;z-index:10;}
+.loading-bar .circle {position:absolute;top:50%;left:50%;display:block;width:80px;height:80px;border-radius:100%;transform:translate(-50%,-50%) rotate(-90deg);}
+.loading-bar .circle circle {stroke-dasharray:340px;stroke-width:10px;fill:transparent;stroke:#ff5a00;stroke-linecap:round;
+animation:circleMotion forwards 2s ease-out infinite;}
+.button-wrap {position:absolute;top:0;right:0;z-index:10;}
+</style>
+<body>
+	<div id="wrap">
+		<div class="webgl-canvas">
+			<div class="button-wrap">
+				<button class="model" data-gltf="/assets/threejs/images/car1/scene.gltf" data-bg="/assets/threejs/images/texture.jpg" data-scale="5">제품 1</button>
+				<button class="model" data-gltf="/assets/threejs/images/car2/scene.gltf" data-bg="/assets/threejs/images/sky-texture.jpg" data-scale="5">제품 2</button>
+				<button class="model" data-gltf="/assets/threejs/images/car3/scene.gltf" data-bg="/assets/threejs/images/texture.jpg" data-scale="0.03">제품 3</button>
+
+				<button class="remove">제거</button>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+$(function () {
+	$('.button-wrap .model').on('click', function () {
+		let thisSrc = $(this).data('gltf');
+		let thisScale = $(this).data('scale');
+		let thisBg = $(this).data('bg');
+		carMotion.drawObj(thisSrc,thisScale,thisBg);
+	});
+	$('.button-wrap .remove').on('click', function () {
+		carMotion.destroy();
+	});
+
+	const threeCarMotion = function () {
+		let $el;
+		let $scene;
+		let $camera;
+		let $renderer;
+		let renderCalls = [];
+		let stats;
+		let loadManager;
+
+		let $object;
+		let $space;
+		let $light;
+		let _controls;
+
+		let gltfLoader;
+
+		const _init = (el) => {
+			$el = el;
+			_setting(el);
+
+			_drawLight();
+
+			$camera.position.set(10,10,10);
+			
+			_render();
+		}
+		const _setting = (el) => {
+			$scene = new THREE.Scene();
+			$camera = new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,0.1,1000);
+			$renderer = new THREE.WebGLRenderer({antialias: true});
+			_controls = new THREE.OrbitControls($camera, $renderer.domElement);
+			stats = new Stats();
+			loadManager = new THREE.LoadingManager();
+			gltfLoader = new THREE.GLTFLoader(loadManager);
+
+			$renderer.setClearColor(new THREE.Color(0x000000));
+			$renderer.shadowMap.enabled = true;
+			THREE.Cache.enabled = true; // 캐시
+
+			_resize();
+
+			el[0].appendChild($renderer.domElement);
+			el[0].appendChild(stats.domElement);
+			el.prepend(
+				'<span class="loading-bar">'
+				+'<svg class="circle" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"/></svg>'
+				+'</span>'
+			);
+
+			_loading();
+
+			// comtrol
+			_controls.rotateSpeed = 0.3;
+			_controls.enableDamping = true;
+			_controls.dampingFactor = 0.05;
+			_controls.autoRotate = true;
+			_controls.autoRotateSpeed = 0.01;
+		}
+		const _loading = () => {
+			loadManager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+				$el.find('.loading-bar').css('display', 'block');
+			};
+		}
+		const _drawObj = (objSrc,scale,bgSrc) => {
+			if($object) $scene.remove($object);
+			if($space) $scene.remove($space);
+
+			gltfLoader.load(objSrc, function (gltf) {
+				$object = gltf.scene;
+				$object.scale.set(scale,scale,scale);
+				$object.position.set(0, 0, 0);
+				$scene.add($object);
+
+				$el.find('.loading-bar').stop().animate({ 'opacity':0 },500 , function () {
+					$(this).css({'display':'none','opacity':1});
+				});
+			});
+
+			let spaceGeometry = new THREE.SphereGeometry(100,100,100);
+			let spaceMaterial = new THREE.MeshBasicMaterial({
+				map:THREE.ImageUtils.loadTexture(bgSrc),
+				side: THREE.BackSide
+			});
+			$space = new THREE.Mesh(spaceGeometry,spaceMaterial);
+			$space.position.set(0,0,0);
+
+			$scene.add($space);
+		}
+		const _drawLight = () => {
+			let $light = new THREE.SpotLight(0xffffff);
+			$light.position.set(30.628,24.124,19.180);
+			$light.castShdow = true;
+			$light.shadow.mapSize = new THREE.Vector2(1024,1024);
+
+			$scene.add($light);
+
+			let $light2 = new THREE.AmbientLight(0xffffff, 1);
+			$scene.add($light2);
+		}
+
+		const _render = () => {
+			requestAnimationFrame(_render);
+			renderCalls.forEach(function(callback) {
+				callback();
+			});
+
+			if(_controls) _controls.update();
+			stats.update();
+
+			$camera.lookAt($scene.position);
+			$renderer.render($scene,$camera);
+		}
+
+		const _resize = () => {
+			$camera.aspect = window.innerWidth/window.innerHeight;
+    		$camera.updateProjectionMatrix();
+			$renderer.setSize(window.innerWidth,window.innerHeight);
+		}
+
+		const _destroy = () => {
+			
+		}
+
+		return {
+			init : _init,
+			drawObj : _drawObj,
+			resize : _resize,
+			destroy : _destroy
+		}
+	}
+
+	let carMotion = new threeCarMotion();
+	carMotion.init($('.webgl-canvas'));
+
+	$(window).on('resize', function () {
+		carMotion.resize();
+	});
+});
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+

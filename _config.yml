@@ -26,3 +26,6 @@ plugins:
 
 # baseurl
 baseurl: /
+
+gems:
+  - jekyll-babel

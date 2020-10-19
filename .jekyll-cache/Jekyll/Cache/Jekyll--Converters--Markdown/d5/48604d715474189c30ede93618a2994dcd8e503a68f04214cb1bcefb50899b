@@ -1,0 +1,8 @@
+I"<h1 id="raf-scroll">RAF Scroll</h1>
+<hr />
+
+<p>기존 scroll event 만으로 사용하지 않고<br />
+<strong><u>requestAnimationFrame</u></strong> 속성을 사용하여 scroll event를 제어</p>
+
+<p><a href="/html/00_canvas/raf-scroll.html">DEMO 버전 보기</a></p>
+:ET

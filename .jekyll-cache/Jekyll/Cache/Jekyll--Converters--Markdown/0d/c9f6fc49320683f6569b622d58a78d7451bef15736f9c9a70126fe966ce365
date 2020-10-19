@@ -1,0 +1,22 @@
+I"M<h1 id="canvas">canvas</h1>
+<h2 id="path-scroll-mask-animaiton-ver-10">Path Scroll Mask Animaiton Ver 1.0</h2>
+
+<h3 id="svg-path-함수">SVG Path 함수</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">path</span><span class="p">.</span><span class="nx">getTotalLength</span><span class="p">()</span>
+<span class="nx">path</span><span class="p">.</span><span class="nx">getPointAtLength</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">x</span>
+<span class="nx">path</span><span class="p">.</span><span class="nx">getPointAtLength</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">y</span>
+</code></pre></div></div>
+<h3 id="canvas-마스크">canvas 마스크</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ctx</span><span class="p">.</span><span class="nx">globalCompositeOperation</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">source-in</span><span class="dl">'</span>
+</code></pre></div></div>
+
+<hr />
+
+<h4 id="v10">V1.0</h4>
+<ul>
+  <li>svg path 값으로만 됨</li>
+  <li>곡선 안됨</li>
+</ul>
+
+<p><a href="/html/00_canvas/path-mask-scroll.html">DEMO 버전 보기</a></p>
+:ET
