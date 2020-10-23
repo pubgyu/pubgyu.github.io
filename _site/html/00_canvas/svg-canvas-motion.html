@@ -1,0 +1,171 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Path Mask Scroll</title>
+
+	<script src="/assets/js/jquery-3.4.1.min.js"></script>
+	<script src="/assets/threejs/js/three/dat.gui.min.js"></script>
+	<script type="module">
+		import { logoShow } from '/assets/js/console-logo.mjs';
+		logoShow();
+	</script>
+</head>
+<style>
+html,body {position:relative;width:100%;height:100%;margin:0;padding:0;}
+#wrap {position:relative;width:100%;height:100%;font-size:0;}
+.sticky-wrap {position:relative;top:0;left:0;display:inline-block;width:100%;height:100vh;background-color:#000;}
+.sticky-wrap .move-wrap {position:absolute;top:0;left:0;width:100%;height:100vh;}
+.sticky-wrap .move-wrap canvas {position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;}
+.sticky-wrap .button-wrap {position:relative;z-index:10;}
+.sticky-wrap .dg {position:relative;z-index:10;}
+
+.sticky-wrap.sticky {height:5000px;}
+.sticky-wrap.sticky .move-wrap {position:sticky;}
+</style>
+<body>
+	<div id="wrap">
+		<article class="sticky-wrap">
+			<div class="move-wrap">
+				<div class="button-wrap">
+					<button class="svg-play">재생</button>
+					<button class="svg-pause">정지</button>
+					<button class="svg-destroy">파괴</button>
+					<button class="svg-init">생성</button>
+				</div>
+				<canvas class="svg-motion"></canvas>
+			</div>
+		</article>
+	</div>
+</body>
+<script type="module">
+import { rafScroll } from '/assets/js/raf-scroll.mjs';
+import { dbResize } from '/assets/js/debounce-resize.mjs';
+import { _svgCanvasMotion } from '/assets/js/svg-canvas-motion.mjs';
+$(function () {
+	// gui 제어
+	const gui = new dat.GUI({ autoPlace : false });
+	$('.sticky-wrap .move-wrap').append($(gui.domElement));
+
+	let svgCanvasMotion;
+	let 
+	_minScale = 2,
+	_maxScale = 1,
+	_speed = 0.01,
+	_moveX = 0,
+	_moveY = 0,
+	_autoPlay = false,
+	_bgFadeIn = false,
+	_bgFadeOut = false,
+	_reverse = false,
+	_bgColor = '#ffffff',
+	_scrollEase = 0.92;
+
+	const lightControl = {
+		minScale : _minScale,
+		maxScale : _maxScale,
+		speed : _speed,
+		moveX : _moveX,
+		moveY : _moveY,
+		autoPlay : _autoPlay,
+		bgFadeIn : _bgFadeIn,
+		bgFadeOut : _bgFadeOut,
+		reverse : _reverse,
+		bgColor : _bgColor,
+		ease : _scrollEase
+	}
+	gui.add(lightControl, 'minScale', 0, 50).step(1).onChange(function (val){
+		_minScale = val;
+		canvasMotionWrap();
+	});
+	gui.add(lightControl, 'maxScale', 0, 50).step(1).onChange(function (val){
+		_maxScale = val;
+		canvasMotionWrap();
+	});
+	gui.add(lightControl, 'speed', 0, 1).step(0.001).onChange(function (val){
+		_speed = val;
+		canvasMotionWrap();
+	});
+	gui.add(lightControl, 'moveX', -10000, 10000).step(10).onChange(function (val){
+		_moveX = val;
+		canvasMotionWrap();
+	});
+	gui.add(lightControl, 'moveY', -10000, 10000).step(10).onChange(function (val){
+		_moveY = val;
+		canvasMotionWrap();
+	});
+	gui.add(lightControl, 'autoPlay').onChange(function (val){
+		_autoPlay = val;
+		canvasMotionWrap();
+	});
+	gui.addColor(lightControl, 'bgColor').onChange(function (val){
+		_bgColor = val;
+		canvasMotionWrap();
+	});
+	gui.add(lightControl, 'bgFadeIn').onChange(function (val){
+		_bgFadeIn = val;
+		canvasMotionWrap();
+	});
+	gui.add(lightControl, 'bgFadeOut').onChange(function (val){
+		_bgFadeOut = val;
+		canvasMotionWrap();
+	});
+	gui.add(lightControl, 'reverse').onChange(function (val){
+		_reverse = val;
+		canvasMotionWrap();
+	});
+	gui.add(lightControl, 'ease', 0, 0.99).step(0.01).onChange(function (val){
+		_scrollEase = val;
+		canvasMotionWrap();
+	});
+
+	let canvasMotionWrap = () => {
+		if(_autoPlay) {
+			$('.sticky-wrap').removeClass('sticky');
+		}else {
+			$('.sticky-wrap').addClass('sticky');
+		}
+		svgCanvasMotion = new _svgCanvasMotion($('.sticky-wrap .svg-motion'), {
+			svgSrc : '/assets/images/test.svg',
+			bgImgSrc : '/assets/images/test.jpg',
+			moveNode : $('.sticky-wrap'),
+			autoPlay : _autoPlay,
+			minScale : _minScale,
+			maxScale : _maxScale,
+			moveX : _moveX,
+			moveY : _moveY,
+			speed : _speed,
+			bgFadeIn : _bgFadeIn,
+			bgFadeOut : _bgFadeOut,
+			reverse : _reverse,
+			bgColor : _bgColor,
+			startEvent : function () {
+				// console.log('start');
+			},
+			scrollEvent : function () {
+				// console.log('scroll');
+			},
+			endEvent : function () {
+				// console.log('end');
+			}
+		});
+
+		$('.svg-play').off('click').on('click', function () {
+			if(_autoPlay) svgCanvasMotion.play();
+		});
+		$('.svg-pause').off('click').on('click', function () {
+			if(_autoPlay) svgCanvasMotion.pause();
+		});
+		$('.svg-destroy').off('click').on('click', function () {
+			svgCanvasMotion.destroy();
+		});
+		$('.svg-init').off('click').on('click', function () {
+			svgCanvasMotion.init();
+		});
+		if(!_autoPlay) $(window).off('scroll.raf').on('scroll.raf', rafScroll(svgCanvasMotion.scroll, _scrollEase));
+		$(window).on('resize' ,dbResize(svgCanvasMotion.resize,300));
+	}
+});
+</script>
+</html>	

@@ -1,0 +1,29 @@
+I"	<p><img src="/assets/images/gif/debounce-resize.gif" alt="" /></p>
+<h2 id="원리">원리</h2>
+<hr />
+
+<p>기존 resize event 만으로 동작하지 않고<br />
+<strong><u>settimeout</u></strong> 속성을 사용하여 마지막으로 함수가 호출된 시점에서 특정 시간이 지난 후 하나의 이벤트만 발생하도록 하는 기술</p>
+
+<h2 id="퍼포먼스">퍼포먼스</h2>
+<hr />
+
+<p>기존 resize는 호출될때마다 계속 호출이 되며
+debounce 방식은 마지막 함수 호출 기준으로 한번의 호출만 허용</p>
+
+<p>시각적으로는 기존 resize는 바뀌는 과정이 계속 보이지만
+debounce 방식은 바뀌는 과정에선 resize가 안먹히는 것처럼 보일수 있음</p>
+
+<h2 id="사용법">사용법</h2>
+<hr />
+
+<p>1.debounce resize 함수 import</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">dbResize</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">debounce-resize.mjs</span><span class="dl">'</span><span class="p">;</span>
+</code></pre></div></div>
+<p><br />
+2.resize event안에 넣어주고 callback 함수와 milliseconds 값 넣기</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//첫번째 인자 callback, 두번째 인자 milliseconds 값</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">resize</span><span class="dl">'</span><span class="p">,</span> <span class="nx">dbResize</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">ms</span><span class="p">));</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">resize</span><span class="dl">'</span><span class="p">,</span> <span class="nx">dbResize</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">ms</span><span class="p">));</span>
+</code></pre></div></div>
+:ET

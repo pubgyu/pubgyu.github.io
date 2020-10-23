@@ -1,0 +1,119 @@
+I"6<h2 id="원리">원리</h2>
+<hr />
+
+<p>svg path 값을 이용하여 자동 모션과 스크롤 기반 모션을 줄수 있음</p>
+
+<h2 id="사용법">사용법</h2>
+<hr />
+
+<p>1.script import</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">_svgPathMotion</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">svg-path-motion.mjs</span><span class="dl">'</span><span class="p">;</span>
+</code></pre></div></div>
+<p><br />
+2.html 소스상에 svg 태그가 있어야 한다</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;svg</span> <span class="na">viewBox=</span><span class="s">"0 0 283.46 283.46"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M81.19,86.38c-0.49,14.96-0.99,29.93-1.48,44.89"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M83.98,85.94c3.37-2,7.11-3.57,11.03-3.63c3.91-0.06,8.01,1.64,10.06,4.97c2,3.26,1.69,7.65-0.37,10.88
+					c-2.06,3.22-5.66,5.29-9.43,5.95s-7.68-0.01-11.25-1.39"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M94.43,107.24c2,3.92,3.99,7.84,5.99,11.76c2.39,4.7,4.92,9.57,9.11,12.78"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M125.2,131.99c6.05-16.48,12.1-32.96,18.16-49.45"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M146.31,82.91c3.26,16.38,6.64,33.07,14.78,47.65"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M137.03,110c3.84-0.12,7.69-0.04,11.53,0.24"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M173.71,81.84c-1.25,15.78-1.64,31.62-1.17,47.44"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M176.72,82.56c6.79-0.36,13.6-0.4,20.39-0.13"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M176.04,98.4c6.69-0.81,13.48-0.9,20.19-0.25"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M104.51,160.29c-4.66-0.85-9.46-0.92-14.15-0.22c-0.97,0.15-1.97,0.34-2.81,0.85
+					c-1.02,0.62-1.71,1.65-2.24,2.71c-1.37,2.76-1.82,6.03-0.94,8.98c0.89,2.95,3.18,5.51,6.12,6.43c2.83,0.88,6.05,0.27,8.73,1.55
+					c3.71,1.78,4.93,6.96,3.1,10.64s-5.97,5.82-10.07,6.14s-8.17-0.94-11.94-2.57"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M130.75,176.39c-3.99-2.11-9.13-1.85-12.89,0.65s-5.97,7.16-5.55,11.65c0.25,2.65,1.5,5.36,3.83,6.64
+					c1.77,0.97,3.9,1,5.92,0.93c3.38-0.12,6.91-0.49,9.72-2.37"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M139.57,173.57c1.83,1.59,2.9,3.9,3.4,6.27s0.49,4.81,0.48,7.23c-0.02,3.81-0.04,7.62-0.06,11.42"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M144.81,192.02c0.03-2.13,0.24-4.25,0.64-6.34c0.37-1.98,0.94-3.99,2.2-5.56c1.26-1.57,3.35-2.62,5.31-2.13"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M162.65,181.11c-1.21,2.35-1.41,5.08-1.52,7.72c-0.08,2.15-0.05,4.5,1.32,6.16c1.18,1.43,3.13,2.01,4.98,2.02
+					c4.31,0.02,8.46-2.95,9.84-7.02c0.63-1.86,0.72-3.88,0.49-5.83c-0.1-0.88-0.27-1.77-0.65-2.57
+					C174.39,175.88,165.52,175.53,162.65,181.11z"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M186.08,155.87c-0.76,8.52-1.52,17.03-2.29,25.55c-0.5,5.57-0.99,11.2-0.08,16.71
+					c0.14,0.83,0.32,1.68,0.84,2.34s1.46,1.06,2.22,0.7"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M194.41,155.63c-0.2,7.48-0.9,14.95-2.11,22.33c-1.05,6.47-2.47,13.24-0.35,19.44
+					c0.54,1.57,1.83,3.34,3.44,2.94"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;/svg&gt;</span>
+</code></pre></div></div>
+<p><br />
+3.함수 선언해주고 인자 넣기</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//첫번째 인자 node는 svg를 타겟으로 한다</span>
+<span class="kd">let</span> <span class="nx">svgMotionFn</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">_svgPathMotion</span><span class="p">(</span><span class="nx">Svg</span> <span class="nx">Node</span><span class="p">,</span> <span class="nx">Options</span><span class="p">);</span>
+</code></pre></div></div>
+<p><br />
+4.자동재생은 무조건 <strong>autoPlay:true</strong> 옵션을 넣어야하고<br />
+스크롤 모션은 무조건 <strong>moveNode:node</strong> 옵션을 넣어야 한다
+<br /></p>
+
+<h2 id="옵션">옵션</h2>
+<hr />
+<p><strong>Path 옵션</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>옵션명</th>
+      <th style="text-align: center">내용</th>
+      <th style="text-align: right">기본값</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">autoPlay</code></td>
+      <td style="text-align: center">자동재생 가능 유/무</td>
+      <td style="text-align: right"><code class="highlighter-rouge">false</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>자동재생 옵션</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>옵션명</th>
+      <th style="text-align: center">내용</th>
+      <th style="text-align: right">기본값</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">autoPlay</code></td>
+      <td style="text-align: center">자동재생 가능 유/무</td>
+      <td style="text-align: right"><code class="highlighter-rouge">false</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">speed</code></td>
+      <td style="text-align: center">자동재생 스피드</td>
+      <td style="text-align: right"><code class="highlighter-rouge">0.01</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>스크롤 옵션</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>옵션명</th>
+      <th style="text-align: center">내용</th>
+      <th style="text-align: right">기본값</th>
+      <th>예시</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">moveNode</code></td>
+      <td style="text-align: center">스크롤 이동되는 거리를 가진 부모 노드</td>
+      <td style="text-align: right"><code class="highlighter-rouge">null</code></td>
+      <td><code class="highlighter-rouge">$('.parent')</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br />
+<a href="/html/00_canvas/svg-path-motion.html" target="_blank">예시 보기</a></p>
+:ET

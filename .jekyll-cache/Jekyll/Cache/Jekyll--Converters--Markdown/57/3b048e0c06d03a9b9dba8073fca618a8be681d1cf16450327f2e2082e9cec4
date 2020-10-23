@@ -1,0 +1,95 @@
+I"3<p><img src="/assets/images/gif/svg-path-motion.gif" alt="" /></p>
+<h2 id="원리">원리</h2>
+<hr />
+
+<p>svg path 값을 이용하여 자동 모션과 스크롤 기반 모션을 줄수 있음</p>
+
+<h2 id="사용법">사용법</h2>
+<hr />
+
+<p>1.script import</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">_svgPathMotion</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">svg-path-motion.mjs</span><span class="dl">'</span><span class="p">;</span>
+</code></pre></div></div>
+<p><br />
+2.html 소스상에 svg 태그가 있어야 한다</p>
+
+<p><br />
+3.함수 선언해주고 인자 넣기</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//첫번째 인자 node는 svg를 타겟으로 한다</span>
+<span class="kd">let</span> <span class="nx">svgMotionFn</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">_svgPathMotion</span><span class="p">(</span><span class="nx">Svg</span> <span class="nx">Node</span><span class="p">,</span> <span class="nx">Options</span><span class="p">);</span>
+</code></pre></div></div>
+<p><br />
+4.자동재생은 무조건 <strong>autoPlay:true</strong> 옵션을 넣어야하고<br />
+스크롤 모션은 무조건 <strong>moveNode:node</strong> 옵션을 넣어야 한다
+<br /></p>
+
+<h2 id="옵션">옵션</h2>
+<hr />
+
+<p><strong>자동재생 옵션</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>옵션명</th>
+      <th style="text-align: center">내용</th>
+      <th style="text-align: right">기본값</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">autoPlay</code></td>
+      <td style="text-align: center">자동재생 가능 유/무</td>
+      <td style="text-align: right"><code class="highlighter-rouge">false</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">speed</code></td>
+      <td style="text-align: center">자동재생 스피드</td>
+      <td style="text-align: right"><code class="highlighter-rouge">0.01</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>스크롤 옵션</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>옵션명</th>
+      <th style="text-align: center">내용</th>
+      <th style="text-align: right">기본값</th>
+      <th>예시</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">moveNode</code></td>
+      <td style="text-align: center">스크롤 이동되는 거리를 가진 부모 노드</td>
+      <td style="text-align: right"><code class="highlighter-rouge">null</code></td>
+      <td><code class="highlighter-rouge">$('.parent')</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>callback</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>옵션명</th>
+      <th style="text-align: center">내용</th>
+      <th style="text-align: right">인자</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">endEvent</code></td>
+      <td style="text-align: center">모션이 완료된 후 실행</td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br />
+<a href="/html/00_canvas/svg-path-motion.html" target="_blank">예시 보기</a></p>
+:ET

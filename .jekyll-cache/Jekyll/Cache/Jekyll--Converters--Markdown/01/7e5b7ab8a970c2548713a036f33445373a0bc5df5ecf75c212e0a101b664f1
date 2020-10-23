@@ -1,0 +1,45 @@
+I"�<p><img src="/assets/images/gif/raf-scroll.gif" alt="" /></p>
+<h2 id="원리">원리</h2>
+<hr />
+
+<p>기존 scroll event 만으로 동작하지 않고<br />
+<strong><u>requestAnimationFrame</u></strong> 속성을 사용하여 scroll event를 동작</p>
+<h2 id="퍼포먼스">퍼포먼스</h2>
+<hr />
+
+<p>기존 scroll은 <strong>task que</strong>에 stack이 쌓이는 쌓임<br />
+RAF 은 <strong>animation frame que</strong>에 stack이 쌓임<br />
+브라우져의 초당 렌더링 횟수(60fps) 을 맞추기 위해 스스로 조절함</p>
+
+<h2 id="사용법">사용법</h2>
+<hr />
+
+<p>1.raf scroll 함수 import</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">rafScroll</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">raf-scroll.mjs</span><span class="dl">'</span><span class="p">;</span>
+</code></pre></div></div>
+<p><br />
+2.scroll event안에 넣어주고 callback 함수와 ease 값 넣기</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//첫번째 인자 callback, 두번째 인자 ease 값</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">scroll</span><span class="dl">'</span><span class="p">,</span> <span class="nx">rafScroll</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">ease</span><span class="p">));</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">scroll</span><span class="dl">'</span><span class="p">,</span> <span class="nx">rafScroll</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="nx">ease</span><span class="p">));</span>
+</code></pre></div></div>
+<p><br />
+3.ease 사용법</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//ease 값은 0 ~ 0.99 소수점으로 넣음</span>
+<span class="c1">//easing을 뺄땐 0 또는 생략가능</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">scroll</span><span class="dl">'</span><span class="p">,</span> <span class="nx">rafScroll</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="mi">0</span> <span class="o">~</span> <span class="mf">0.99</span><span class="p">));</span>
+</code></pre></div></div>
+<p><br />
+4.ease scroll top</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">callback</span> <span class="nx">st</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="c1">//첫번째 인자 값이 scrollTop 값</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h2 id="v10-이슈">V1.0 이슈</h2>
+<ul>
+  <li>ease의 모션이 하나밖에 없음</li>
+</ul>
+
+<p><br />
+<a href="/html/00_canvas/raf-scroll.html" target="_blank">예시 보기</a></p>
+:ET

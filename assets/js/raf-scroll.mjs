@@ -8,9 +8,9 @@ export function rafScroll(cb, _ease) {
 		scrolled : true
 	}
 	let rafTimeout = null;
-	window.cancelAnimationFrame(esupdate);
+	window.cancelAnimationFrame(esUpdate);
 
-	function esupdate(){
+	function esUpdate(){
 		let scrollY = $(window).scrollTop();
 		esScroller.endY = scrollY;
 		esScroller.y += (scrollY - esScroller.y) * esScroller.ease;
@@ -19,13 +19,13 @@ export function rafScroll(cb, _ease) {
 			esScroller.y = scrollY;
 			esScroller.scrolled = false;
 		}
-		rafTimeout = (esScroller.scrolled) ? requestAnimationFrame(esupdate) : null;
+		rafTimeout = (esScroller.scrolled) ? requestAnimationFrame(esUpdate) : null;
 
 		cb(esScroller.y);
 	}
 
 	return function () {
 		esScroller.scrolled = true;
-		if(!rafTimeout) rafTimeout = requestAnimationFrame(esupdate);
+		if(!rafTimeout) rafTimeout = requestAnimationFrame(esUpdate);
 	}
 }

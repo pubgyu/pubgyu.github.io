@@ -3,12 +3,12 @@
 	"file": "style.css",
 	"sources": [
 		"style.scss",
-		"_sass/minima/skins/classic.scss",
-		"_sass/minima/initialize.scss",
-		"_sass/minima/custom-variables.scss",
-		"_sass/minima/_base.scss",
-		"_sass/minima/_layout.scss",
-		"_sass/minima/custom-styles.scss"
+		"../../../../../_sass/minima/skins/classic.scss",
+		"../../../../../_sass/minima/initialize.scss",
+		"../../../../../_sass/minima/custom-variables.scss",
+		"../../../../../_sass/minima/_base.scss",
+		"../../../../../_sass/minima/_layout.scss",
+		"../../../../../_sass/minima/custom-styles.scss"
 	],
 	"sourcesContent": [
 		"@import\n  \"minima/skins/classic\",\n  \"minima/initialize\";",

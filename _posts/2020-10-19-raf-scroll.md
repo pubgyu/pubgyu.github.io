@@ -3,6 +3,7 @@ title: "[JS] RAF Scroll - V1.0"
 layout: post
 ---
 
+![](/assets/images/gif/raf-scroll.gif)
 ## 원리
 ------
 
@@ -40,7 +41,7 @@ $(window).on('scroll', rafScroll(callback, 0 ~ 0.99));
 <br>
 4.ease scroll top
 ```javascript
-function callback (st) {
+callbackFn (st) => {
 //첫번째 인자 값이 scrollTop 값
 }
 ```
