@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pixel Car Street
+* source:	https://sketchfab.com/3d-models/pixel-car-street-efecee12efc144dfbf93ba5d51558c63
+* author:	Maxim Ploshinsky (https://sketchfab.com/ploshinskymaxim)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pixel Car Street" (https://sketchfab.com/3d-models/pixel-car-street-efecee12efc144dfbf93ba5d51558c63) by Maxim Ploshinsky (https://sketchfab.com/ploshinskymaxim) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

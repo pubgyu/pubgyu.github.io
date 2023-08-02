@@ -1,0 +1,8 @@
+Model Information:
+* title:	Character122 Rigged Man
+* source:	https://sketchfab.com/3d-models/character122-rigged-man-da561a35675e4a688b05ec73e19a9128
+* author:	BaluCG (https://sketchfab.com/BaluCG)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
