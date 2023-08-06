@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/pubgyu-react/static/css/main.83189124.css",
-    "main.js": "/pubgyu-react/static/js/main.432ebe3d.js",
-    "index.html": "/pubgyu-react/index.html",
-    "main.83189124.css.map": "/pubgyu-react/static/css/main.83189124.css.map",
-    "main.432ebe3d.js.map": "/pubgyu-react/static/js/main.432ebe3d.js.map"
+    "main.css": "/static/css/main.68ef5ecd.css",
+    "main.js": "/static/js/main.66902fed.js",
+    "index.html": "/index.html",
+    "main.68ef5ecd.css.map": "/static/css/main.68ef5ecd.css.map",
+    "main.66902fed.js.map": "/static/js/main.66902fed.js.map"
   },
   "entrypoints": [
-    "static/css/main.83189124.css",
-    "static/js/main.432ebe3d.js"
+    "static/css/main.68ef5ecd.css",
+    "static/js/main.66902fed.js"
   ]
 }
